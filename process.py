@@ -30,5 +30,5 @@ def table_filling_process(array):
                 temp = temp + concat(table[j-i][k], table[k+1][j])
             table[j-i][j] = grammar.check_production(temp)
             result[i][j-i] = table[j-i][j]
-    st.table(result)
+    st.info(st.table(result))
     return grammar.check_symbol(table[0][len(array)-1])
