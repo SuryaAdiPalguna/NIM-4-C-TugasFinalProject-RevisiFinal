@@ -1,4 +1,5 @@
 import grammar
+import streamlit as st
 
 def create_table(n):
     table = []
@@ -18,12 +19,16 @@ def concat(x, y):
 
 def table_filling_process(array):
     table = create_table(len(array))
+    result = create_table(len(array))
     for i in range(len(array)):
         table[i][i] = grammar.check_production([array[i]])
+        result[0][i] = table[i][i]
     for i in range(1, len(array)):
         for j in range(i, len(array)):
             temp = []
             for k in range(j-i, j):
                 temp = temp + concat(table[j-i][k], table[k+1][j])
             table[j-i][j] = grammar.check_production(temp)
+            result[i][j-i] = table[j-i][j]
+    st.table(result)
     return grammar.check_symbol(table[0][len(array)-1])
